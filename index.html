@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LoyekeApp_Pharma</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0B4D2E">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--g9:#0B4D2E;--g5:#1F8A4C;--g2:#7BC67E;--g1:#E6F4E8;--bg:#F5F8F5;--card:#fff;--tx:#14221A;--mu:#5F7266;--ln:#DCE6DE;--red:#B3261E;--redbg:#FBE9E7;--amb:#8A5A00;--ambbg:#FFF1D6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--g1:#16301F;--bg:#0D1510;--card:#15211A;--tx:#E8F1EA;--mu:#9CB1A2;--ln:#26382C;--redbg:#3A1B18;--ambbg:#3A2D10;--red:#FF8A80;--amb:#F2C46B}}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:84px}
+header{background:var(--g9);color:#fff;padding:14px 16px 18px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--g9);z-index:10}
+.brand{display:flex;justify-content:space-between;align-items:center}
+.brand b{font-size:18px;letter-spacing:.2px}.brand b i{font-style:normal;color:var(--g2)}
+.cur{background:rgba(255,255,255,.15);color:#fff;border:0;border-radius:99px;padding:6px 12px;font:600 13px inherit}
+main{max-width:720px;margin:0 auto;padding:14px}
+h2{font-size:20px;margin:4px 0 12px}h3{font-size:15px;margin:18px 0 8px}
+.hero{background:var(--g9);color:#fff;border-radius:16px;padding:18px;margin-bottom:12px}
+.hero small{color:var(--g2)}.hero .big{font-size:30px;font-weight:700;margin-top:2px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.k{background:var(--card);border:1px solid var(--ln);border-radius:12px;padding:12px}
+.k b{display:block;font-size:24px}.k span{color:var(--mu);font-size:13px}
+.k.w b{color:var(--amb)}.k.r b{color:var(--red)}
+.row{background:var(--card);border:1px solid var(--ln);border-radius:12px;padding:12px;margin-bottom:8px;display:flex;gap:10px;align-items:center;justify-content:space-between}
+.row .t{min-width:0}.row .t b{display:block;overflow:hidden;text-overflow:ellipsis}.row .t span{color:var(--mu);font-size:13px}
+.tag{font-size:12px;font-weight:700;padding:3px 9px;border-radius:99px;white-space:nowrap;background:var(--g1);color:var(--g5)}
+.tag.r{background:var(--redbg);color:var(--red)}.tag.w{background:var(--ambbg);color:var(--amb)}
+input,select{width:100%;padding:12px;border:1px solid var(--ln);border-radius:10px;background:var(--card);color:var(--tx);font:inherit;margin-bottom:10px}
+label{font-size:13px;color:var(--mu);display:block;margin-bottom:4px}
+.btn{background:var(--g5);color:#fff;border:0;border-radius:10px;padding:11px 16px;font:600 14px inherit}
+.btn.o{background:transparent;color:var(--g5);border:1px solid var(--g5)}.btn.d{background:var(--redbg);color:var(--red)}
+.btn:disabled{opacity:.5}
+.fab{position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom,0px));width:56px;height:56px;border-radius:50%;background:var(--g5);color:#fff;border:0;font-size:28px;box-shadow:0 4px 14px rgba(0,0,0,.3);z-index:6}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--ln);display:flex;padding-bottom:env(safe-area-inset-bottom,0px);z-index:7}
+nav button{flex:1;background:none;border:0;padding:10px 0 8px;color:var(--mu);font:600 11px inherit}
+nav button svg{display:block;margin:0 auto 3px;width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2}
+nav button.on{color:var(--g5)}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:20;display:flex;align-items:flex-end;justify-content:center}
+.sh{background:var(--card);width:100%;max-width:720px;border-radius:18px 18px 0 0;padding:18px;max-height:90%;overflow:auto;padding-bottom:calc(18px + env(safe-area-inset-bottom,0px))}
+.acts{display:flex;gap:8px;justify-content:flex-end;margin-top:6px}
+.empty{text-align:center;color:var(--mu);padding:28px 10px}
+.blk{background:var(--redbg);color:var(--red);border-radius:10px;padding:10px;font-size:13px;margin-bottom:10px}
+.btn,.cur{font-family:inherit;font-size:14px;font-weight:600}.cur{font-size:13px}
+nav button{font-family:inherit;font-size:10px;font-weight:600;padding:10px 0 8px}
+.k b{font-size:20px;overflow-wrap:anywhere}
+.lock{position:fixed;inset:0;background:var(--g9);color:#fff;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
+.lock h2{margin:0 0 4px}.lock p{margin:0 0 18px;color:var(--g2);font-size:14px;min-height:20px}
+.dots{display:flex;gap:14px;margin-bottom:26px}.dots i{width:14px;height:14px;border-radius:50%;border:2px solid var(--g2)}.dots i.on{background:var(--g2)}
+.pad{display:grid;grid-template-columns:repeat(3,72px);gap:14px}
+.pad button{height:72px;border-radius:50%;border:0;background:rgba(255,255,255,.12);color:#fff;font-family:inherit;font-size:26px;font-weight:600}
+.pad button:active{background:rgba(255,255,255,.3)}
+.q{display:flex;align-items:center;gap:6px}.q button{width:38px;height:38px;border-radius:10px;border:1px solid var(--g5);background:transparent;color:var(--g5);font-family:inherit;font-size:20px;font-weight:700}.q input{width:60px;margin:0;text-align:center;padding:8px}
+.tot{display:flex;justify-content:space-between;align-items:center;background:var(--g1);border-radius:12px;padding:14px;margin:10px 0;font-weight:700;font-size:18px}
+.toast{position:fixed;left:16px;right:16px;bottom:calc(90px + env(safe-area-inset-bottom,0px));background:var(--g9);color:#fff;padding:12px 14px;border-radius:12px;z-index:60;text-align:center}
+.row .btn{padding:8px 10px;font-size:13px}
+.lock input{background:#fff;color:#111;border:0}.lock .btn{font-size:15px}
+textarea{background:var(--card);color:var(--tx);border:1px solid var(--ln);border-radius:10px;padding:8px;font-family:monospace}input[type=checkbox]{accent-color:var(--g5)}
+#prt{display:none}
+@media print{body>*:not(#prt){display:none!important}#prt{display:block!important}#prt *{color:#111!important;background:#fff!important}body{padding:0;background:#fff}}
+</style>
+</head>
+<body>
+<header><div class="brand"><b>Loyeke<i>App</i>_Pharma</b><span id="who" style="font-size:12px;color:var(--g2);margin:0 8px 0 auto"></span><button class="cur" id="cur"></button></div></header>
+<main id="v"></main>
+<nav id="nav"></nav>
+<script>
+const KEY="loyeke_pharma_v1";
+const d0=n=>{const x=new Date();x.setDate(x.getDate()+n);return x.toISOString().slice(0,10)};
+const demo=()=>({rate:2800,cur:"USD",meds:[
+{id:1,n:"Paracétamol",dci:"Paracétamol",f:"Comprimé",dos:"500 mg",p:0.1,min:200},
+{id:2,n:"Amoxicilline",dci:"Amoxicilline",f:"Gélule",dos:"500 mg",p:0.35,min:100},
+{id:3,n:"Coartem",dci:"Artéméther-luméfantrine",f:"Comprimé",dos:"20/120 mg",p:3.5,min:30},
+{id:4,n:"Sirop Vitamine C",dci:"Acide ascorbique",f:"Sirop",dos:"125 ml",p:2,min:15}],
+lots:[{id:1,m:1,no:"PCM-2401",q:850,e:d0(400),c:0.05},{id:2,m:2,no:"AMX-2307",q:60,e:d0(45),c:0.2},
+{id:3,m:2,no:"AMX-2201",q:40,e:d0(-20),c:0.2},{id:4,m:3,no:"COA-2403",q:20,e:d0(200),c:2.2},{id:5,m:4,no:"VTC-2402",q:35,e:d0(120),c:1.2}]});
+let S;try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+if(!S||!S.meds)S=demo();S.sales=S.sales||[];S.log=S.log||[];
+S.exp=S.exp||[];S.clos=S.clos||{};S.user=S.user||"Pharmacien";S.ph=S.ph||"Ma pharmacie";S.users=S.users||[];
+[[1,"Paracétamol"],[2,"Amoxicilline"],[3,"Coartem"],[4,"Sirop Vitamine C"]].forEach(([i,n])=>{const m=S.meds.find(x=>x.id===i);if(m&&m.n===n&&m.demo===undefined)m.demo=true});
+S.lots.forEach(l=>{if(l.id<=5&&["PCM-2401","AMX-2307","AMX-2201","COA-2403","VTC-2402"].includes(l.no)&&l.demo===undefined)l.demo=true});
+S.sales.forEach((s,i)=>{s.st=s.st||"valide";s.pay=s.pay||"Espèces";s.no=s.no||"V-"+String(S.sales.length-i).padStart(5,"0")});
+const now=()=>{const t=Math.max(Date.now(),S.ts||0);S.ts=t;return new Date(t).toISOString()};
+const log=(t,x,o={})=>{S.log.unshift({id:Date.now()+Math.random(),d:now(),t,x,u:S.user,uid:CU?CU.id:0,...o})};
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const days=e=>Math.ceil((new Date(e)-new Date(new Date().toDateString()))/864e5);
+const money=(u,c=S.cur,r=S.rate)=>c==="USD"?"$"+u.toFixed(2):Math.round(u*r).toLocaleString("fr-FR")+" FC";
+const med=id=>S.meds.find(m=>m.id===id);
+const sellable=m=>S.lots.filter(l=>l.m===m&&days(l.e)>=0).reduce((a,l)=>a+l.q,0);
+const st=l=>{const d=days(l.e);return d<0?["Expiré","r"]:d<=90?["Péremption "+d+" j","w"]:["Valide",""]};
+const fd=e=>new Date(e).toLocaleDateString("fr-FR");
+let tab="home",q="",hf="",cart=[],fails=0,until=0,hiddenAt=0,cartPt="",cartPm="Espèces",hd1="",hd2="",hm="",hu="",repDay="";
+const toast=m=>{const t=document.createElement("div");t.className="toast";t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),3200)};
+const td=x=>new Date(x).toLocaleDateString("fr-CA");
+const fefo=m=>S.lots.filter(l=>l.m===m&&l.q>0&&days(l.e)>=0).sort((a,b)=>new Date(a.e)-new Date(b.e));
+const PERMS={vendre:"Vendre",annuler:"Annuler / rembourser",stock:"Gérer le stock",catalogue:"Modifier le catalogue et les prix",depenses:"Enregistrer les dépenses",rapports:"Consulter les rapports",cloture:"Clôturer la caisse"},ROLES={admin:"Administrateur",pharmacien:"Pharmacien",vendeur:"Vendeur"},DEF={pharmacien:Object.keys(PERMS),vendeur:["vendre"]};
+let CU=null,lf=0,lu=0;
+const can=p=>!!CU&&(CU.role==="admin"||(p!=="admin"&&CU.perms.includes(p)));
+const need=p=>can(p)||(toast("Permission refusée : action réservée "+(p==="admin"?"à l’administrateur":"aux utilisateurs autorisés")+"."),false);
+const cv=(v,c)=>c==="CDF"?+(+v/S.rate).toFixed(6):+v;
+const rsalt=()=>Array.from(crypto.getRandomValues(new Uint8Array(12)),x=>x.toString(16).padStart(2,"0")).join("");
+const hp=async(pw,salt)=>{try{const k=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveBits"]);const b=await crypto.subtle.deriveBits({name:"PBKDF2",salt:new TextEncoder().encode(salt),iterations:100000,hash:"SHA-256"},k,256);return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}catch(e){return H(salt+pw)}};
+function authBox(title,sub,fields,btn,cb){const o=document.createElement("div");o.className="lock";o.dataset.auth=1;o.style.overflow="auto";
+ o.innerHTML=`<h2>${title}</h2><p id="as">${sub}</p><div style="width:100%;max-width:320px;text-align:left">${fields.map(f=>`<label style="color:var(--g2)">${f[1]}</label><input id="a_${f[0]}" type="${f[2]||"text"}" autocomplete="off">`).join("")}<button class="btn" id="ab" style="width:100%;background:var(--g2);color:var(--g9)">${btn}</button></div>`;
+ document.body.appendChild(o);
+ o.querySelector("#ab").onclick=async()=>{const v={};fields.forEach(f=>v[f[0]]=o.querySelector("#a_"+f[0]).value.trim());const e=await cb(v,o);if(e)o.querySelector("#as").textContent=e};return o}
+function boot(){if(!S.users.length)setupAdmin();else login()}
+function setupAdmin(){authBox("Bienvenue","Créez le compte administrateur de la pharmacie. Retenez le mot de passe : il ne peut pas être récupéré.",[["u","Identifiant"],["n","Nom complet"],["p","Mot de passe (6 caractères min.)","password"],["c","Confirmer le mot de passe","password"]],"Créer le compte",async(v,o)=>{
+ if(!/^[a-z0-9._-]{3,}$/i.test(v.u))return"Identifiant : 3 caractères minimum (lettres, chiffres, . _ -).";if(!v.n)return"Saisissez votre nom.";if(v.p.length<6)return"Mot de passe trop court (6 minimum).";if(v.p!==v.c)return"Les mots de passe diffèrent.";
+ const sa=rsalt(),u={id:Date.now(),u:v.u.toLowerCase(),n:v.n,role:"admin",perms:Object.keys(PERMS),on:true,sa,h:await hp(v.p,sa),cr:now()};S.users.push(u);CU=u;S.user=u.n;log("Utilisateur","Compte administrateur créé : "+u.n);save();o.remove();render()})}
+function login(){authBox("LoyekeApp_Pharma","Connectez-vous pour continuer",[["u","Identifiant"],["p","Mot de passe","password"]],"Se connecter",async(v,o)=>{
+ if(Date.now()<lu)return"Trop d’essais. Patientez "+Math.ceil((lu-Date.now())/1000)+" s.";
+ const u=S.users.find(x=>x.u===v.u.toLowerCase());
+ if(!u||await hp(v.p,u.sa)!==u.h){lf++;log("Connexion","Échec de connexion : "+v.u,{u:"(inconnu)",uid:0});save();if(lf>=5){lf=0;lu=Date.now()+30000;return"Trop d’essais. Patientez 30 s."}return"Identifiant ou mot de passe incorrect."}
+ if(!u.on)return"Ce compte est désactivé. Contactez l’administrateur.";
+ lf=0;CU=u;S.user=u.n;u.last=now();log("Connexion","Connexion de "+u.n);save();o.remove();tab="home";render()})}
+function logout(){if(CU)log("Connexion","Déconnexion de "+CU.n);save();CU=null;login()}
+function pwForm(){form("Changer mon mot de passe",[{k:"o",l:"Mot de passe actuel",t:"password"},{k:"n",l:"Nouveau mot de passe (6 min.)",t:"password"},{k:"c",l:"Confirmer",t:"password"}],async r=>{if(await hp(r.o,CU.sa)!==CU.h)return"Mot de passe actuel incorrect.";if(r.n.length<6)return"6 caractères minimum.";if(r.n!==r.c)return"Les mots de passe diffèrent.";CU.sa=rsalt();CU.h=await hp(r.n,CU.sa);log("Utilisateur","Mot de passe modifié par "+CU.n)})}
+function userForm(u){const n=!u;u=u||{role:"vendeur",perms:[...DEF.vendeur],on:true};
+ const o=modal(`<h2>${n?"Nouvel utilisateur":"Modifier "+esc(u.n)}</h2><label>Identifiant</label><input id="fu" value="${esc(u.u||"")}" ${n?"":"readonly"}><label>Nom complet</label><input id="fn" value="${esc(u.n||"")}"><label>Rôle</label><select id="fr">${Object.entries(ROLES).map(([k,v])=>`<option value="${k}" ${k===u.role?"selected":""}>${v}</option>`).join("")}</select><label>${n?"Mot de passe (6 min.)":"Nouveau mot de passe (vide = inchangé)"}</label><input id="fp" type="password" autocomplete="new-password"><label>Statut</label><select id="fs"><option value="1" ${u.on?"selected":""}>Actif</option><option value="0" ${u.on?"":"selected"}>Désactivé</option></select><label>Permissions</label>${Object.entries(PERMS).map(([k,v])=>`<div class="row" style="padding:8px"><span>${v}</span><input type="checkbox" data-p="${k}" ${u.perms.includes(k)?"checked":""} style="width:22px;margin:0"></div>`).join("")}<div class="acts"><button class="btn o" id="x">Annuler</button><button class="btn" id="s">Enregistrer</button></div>`);
+ const g=x=>o.querySelector(x);
+ g("#fr").onchange=()=>{const r=g("#fr").value;o.querySelectorAll("[data-p]").forEach(c=>c.checked=r==="admin"||(DEF[r]||[]).includes(c.dataset.p))};
+ g("#x").onclick=()=>o.remove();
+ g("#s").onclick=async()=>{const id=g("#fu").value.trim().toLowerCase(),nm=g("#fn").value.trim(),role=g("#fr").value,pw=g("#fp").value,on=g("#fs").value==="1",perms=role==="admin"?Object.keys(PERMS):[...o.querySelectorAll("[data-p]")].filter(c=>c.checked).map(c=>c.dataset.p);
+  if(!/^[a-z0-9._-]{3,}$/.test(id))return toast("Identifiant invalide (3 caractères min.).");if(!nm)return toast("Saisissez le nom.");
+  if(n&&S.users.some(x=>x.u===id))return toast("Identifiant déjà utilisé.");
+  if((n||pw)&&pw.length<6)return toast("Mot de passe : 6 caractères minimum.");
+  if(!n&&u.role==="admin"&&(role!=="admin"||!on)&&!S.users.some(x=>x!==u&&x.role==="admin"&&x.on))return toast("Il faut au moins un administrateur actif.");
+  if(!n&&u===CU&&!on)return toast("Vous ne pouvez pas désactiver votre propre compte.");
+  const ch=[];if(!n){if(u.n!==nm)ch.push("nom");if(u.role!==role)ch.push("rôle "+ROLES[u.role]+" → "+ROLES[role]);if(u.on!==on)ch.push(on?"activé":"désactivé");if(JSON.stringify([...u.perms].sort())!==JSON.stringify([...perms].sort()))ch.push("permissions");if(pw)ch.push("mot de passe réinitialisé")}
+  if(n){u={id:Date.now(),u:id,cr:now()};S.users.push(u)}
+  u.n=nm;u.role=role;u.on=on;u.perms=perms;if(pw){u.sa=rsalt();u.h=await hp(pw,u.sa)}
+  if(u===CU)S.user=u.n;
+  log("Utilisateur",n?`Compte créé : ${nm} (${id}) — ${ROLES[role]}`:`Compte ${u.u} modifié : ${ch.join(", ")||"aucun changement"}`);save();o.remove();render()}}
+const CAT=`Paracétamol|Paracétamol|Comprimé|500 mg|0.02|Antalgique
+Paracétamol sirop|Paracétamol|Sirop|120 mg/5 ml|0.8|Antalgique
+Ibuprofène|Ibuprofène|Comprimé|400 mg|0.04|Anti-inflammatoire
+Diclofénac|Diclofénac|Comprimé|50 mg|0.04|Anti-inflammatoire
+Diclofénac gel|Diclofénac|Gel|1 % 50 g|1.2|Anti-inflammatoire
+Aspirine|Acide acétylsalicylique|Comprimé|500 mg|0.03|Antalgique
+Tramadol|Tramadol|Gélule|50 mg|0.08|Antalgique
+Amoxicilline|Amoxicilline|Gélule|500 mg|0.07|Antibiotique
+Amoxicilline sirop|Amoxicilline|Sirop|250 mg/5 ml|1.5|Antibiotique
+Augmentin|Amoxicilline + acide clavulanique|Comprimé|1 g|0.5|Antibiotique
+Ciprofloxacine|Ciprofloxacine|Comprimé|500 mg|0.1|Antibiotique
+Azithromycine|Azithromycine|Comprimé|500 mg|0.6|Antibiotique
+Cotrimoxazole|Sulfaméthoxazole + triméthoprime|Comprimé|480 mg|0.03|Antibiotique
+Doxycycline|Doxycycline|Gélule|100 mg|0.05|Antibiotique
+Métronidazole|Métronidazole|Comprimé|500 mg|0.04|Antibiotique / antiparasitaire
+Ceftriaxone|Ceftriaxone|Injectable|1 g|0.9|Antibiotique
+Gentamicine|Gentamicine|Injectable|80 mg/2 ml|0.3|Antibiotique
+Coartem|Artéméther + luméfantrine|Comprimé|20/120 mg|1.6|Antipaludique
+Artésunate-amodiaquine|Artésunate + amodiaquine|Comprimé|100/270 mg|1.3|Antipaludique
+Artésunate injectable|Artésunate|Injectable|60 mg|2.5|Antipaludique
+Quinine|Quinine|Comprimé|300 mg|0.15|Antipaludique
+Sulfadoxine-pyriméthamine|Sulfadoxine + pyriméthamine|Comprimé|500/25 mg|0.2|Antipaludique
+Albendazole|Albendazole|Comprimé|400 mg|0.1|Antiparasitaire
+Mébendazole|Mébendazole|Comprimé|500 mg|0.1|Antiparasitaire
+Ivermectine|Ivermectine|Comprimé|3 mg|0.2|Antiparasitaire
+Fluconazole|Fluconazole|Gélule|150 mg|0.3|Antifongique
+Clotrimazole crème|Clotrimazole|Crème|1 % 20 g|0.8|Antifongique
+Oméprazole|Oméprazole|Gélule|20 mg|0.06|Gastro-intestinal
+Antiacide|Hydroxyde d’aluminium|Comprimé|400 mg|0.03|Gastro-intestinal
+SRO|Sels de réhydratation orale|Poudre|Sachet|0.2|Réhydratation
+Zinc|Sulfate de zinc|Comprimé|20 mg|0.05|Réhydratation
+Lopéramide|Lopéramide|Gélule|2 mg|0.05|Gastro-intestinal
+Hyoscine|Butylbromure de hyoscine|Comprimé|10 mg|0.06|Gastro-intestinal
+Cétirizine|Cétirizine|Comprimé|10 mg|0.03|Antihistaminique
+Loratadine|Loratadine|Comprimé|10 mg|0.04|Antihistaminique
+Salbutamol|Salbutamol|Inhalateur|100 µg|1.5|Respiratoire
+Sirop antitussif|Ambroxol|Sirop|30 mg/5 ml|1.2|Respiratoire
+Amlodipine|Amlodipine|Comprimé|5 mg|0.04|Antihypertenseur
+Énalapril|Énalapril|Comprimé|10 mg|0.05|Antihypertenseur
+Nifédipine|Nifédipine|Comprimé|20 mg|0.05|Antihypertenseur
+Furosémide|Furosémide|Comprimé|40 mg|0.03|Cardio-vasculaire
+Metformine|Metformine|Comprimé|500 mg|0.03|Antidiabétique
+Glibenclamide|Glibenclamide|Comprimé|5 mg|0.03|Antidiabétique
+Vitamine C|Acide ascorbique|Comprimé|500 mg|0.03|Vitamines
+Multivitamines|Multivitamines|Comprimé|—|0.06|Vitamines
+Acide folique|Acide folique|Comprimé|5 mg|0.02|Vitamines
+Fer + acide folique|Sulfate ferreux + acide folique|Comprimé|200/0,4 mg|0.03|Vitamines / anémie
+Dexaméthasone|Dexaméthasone|Injectable|4 mg/ml|0.3|Corticoïde
+Prednisolone|Prednisolone|Comprimé|5 mg|0.03|Corticoïde
+Povidone iodée|Povidone iodée|Solution|10 % 125 ml|1.2|Antiseptique
+Sérum physiologique|NaCl 0,9 %|Solution|500 ml|0.8|Solutés
+Ringer lactate|Ringer lactate|Solution|500 ml|1.0|Solutés
+Test de paludisme|TDR paludisme|Dispositif|Unité|0.4|Diagnostic`;
+function loadDemo(){if(!need("admin"))return;const ex=new Set(S.meds.map(m=>(m.n+"|"+m.dos).toLowerCase()));let c=0;
+ CAT.split("\n").forEach((r,i)=>{const[n,dci,f,dos,pa,cat]=r.split("|"),a=+pa;if(ex.has((n+"|"+dos).toLowerCase()))return;const id=1000+i;
+  S.meds.push({id,n,dci,f,dos,pa:a,p:+(a*1.35).toFixed(3),cat,min:20,demo:true});
+  S.lots.push({id:Date.now()+i,m:id,no:"DEMO-"+(i+1),q:i%13===0?3:20+((i*37)%180),e:d0(i%11===0?40:150+(i*53)%600),c:a,demo:true});c++});
+ log("Création",`Catalogue de démonstration chargé : ${c} médicaments (prix et stocks fictifs, non officiels)`);save();render();toast(c+" médicaments de démonstration ajoutés.")}
+function purgeDemo(){if(!need("admin"))return;const nm=S.meds.filter(m=>m.demo).length,nl=S.lots.filter(l=>l.demo||S.meds.some(m=>m.id===l.m&&m.demo)).length;
+ form("Réinitialiser les données de démonstration",[{k:"t",l:"Effacer aussi toutes les ventes, dépenses, rapports et l’historique ?",v:"non",o:[["non","Non : garder ventes, historique et rapports"],["oui","Oui : repartir de zéro (irréversible)"]]},{k:"pw",l:"Votre mot de passe (administrateur)",t:"password"}],async r=>{
+  if(await hp(r.pw,CU.sa)!==CU.h)return"Mot de passe incorrect.";
+  S.lots=S.lots.filter(l=>!(l.demo||S.meds.some(m=>m.id===l.m&&m.demo)));S.meds=S.meds.filter(m=>!m.demo);
+  if(r.t==="oui"){S.sales=[];S.exp=[];S.clos={};S.seq=0;S.log=[]}
+  cart=[];log("Sauvegarde",`Données de démonstration supprimées : ${nm} médicaments, ${nl} lots${r.t==="oui"?" ; ventes, dépenses, rapports et historique effacés":""}`)},
+ `<div class="blk">Supprime ${nm} médicaments et ${nl} lots fictifs (marqués DÉMO). Vos médicaments réels sont conservés.</div>`)}
+function delMed(m){if(!can("admin"))return;const nl=S.lots.filter(l=>l.m===m.id).length;
+ const o=modal(`<h2>Supprimer ${esc(m.n)} ?</h2><div class="blk">Le médicament et ses ${nl} lot(s) seront supprimés. Les ventes passées et l’historique sont conservés.</div><div class="acts"><button class="btn o" id="x">Annuler</button><button class="btn d" id="y">Supprimer</button></div>`);
+ o.querySelector("#x").onclick=()=>o.remove();
+ o.querySelector("#y").onclick=()=>{const q=S.lots.filter(l=>l.m===m.id).reduce((a,l)=>a+l.q,0);S.meds=S.meds.filter(x=>x!==m);S.lots=S.lots.filter(l=>l.m!==m.id);cart=cart.filter(c=>c.m!==m.id);log("Suppression",`${m.n} ${m.dos} supprimé (prix de vente ${money(m.p)}, ${q} u. en stock)`,{m:m.n+" "+m.dos,q,p:m.p,v:q*(m.pa||0)});save();o.remove();render()}}
+function parseCSV(t){t=t.replace(/^\uFEFF/,"");const L0=t.split("\n")[0],d=[";","\t",","].map(x=>[x,L0.split(x).length]).sort((a,b)=>b[1]-a[1])[0][0],R=[];let r=[],c="",q=false;
+ for(let i=0;i<t.length;i++){const ch=t[i];if(q){if(ch=='"'){if(t[i+1]=='"'){c+='"';i++}else q=false}else c+=ch}else if(ch=='"')q=true;else if(ch===d){r.push(c);c=""}else if(ch==="\n"||ch==="\r"){if(ch==="\r"&&t[i+1]==="\n")i++;r.push(c);c="";if(r.some(x=>x.trim()))R.push(r);r=[]}else c+=ch}
+ r.push(c);if(r.some(x=>x.trim()))R.push(r);return R}
+function exportCSV(){if(!need("catalogue"))return;
+ const q=v=>'"'+String(v??"").replace(/"/g,'""')+'"',rows=S.meds.map(m=>[m.n,m.dci,m.f,m.dos,m.pa??"",m.p,m.cat||"",m.min,sellable(m.id),m.demo?"oui":"non"]);
+ const csv="\uFEFF"+[["nom","dci","forme","dosage","prix_achat_usd","prix_vente_usd","categorie","seuil","stock_valide","demo"],...rows].map(r=>r.map(q).join(";")).join("\r\n");
+ const o=modal(`<h2>Exporter le catalogue</h2><p style="color:var(--mu);font-size:13px">${rows.length} médicaments. Le fichier .csv s’ouvre dans Excel.</p><textarea id="ct" readonly style="width:100%;height:110px;font-size:12px"></textarea><div class="acts" style="flex-wrap:wrap"><button class="btn o" id="x">Fermer</button><button class="btn o" id="cp">Copier</button><button class="btn" id="dw">Télécharger .csv</button></div>`);
+ o.querySelector("#ct").value=csv;o.querySelector("#x").onclick=()=>o.remove();
+ o.querySelector("#cp").onclick=async()=>{try{await navigator.clipboard.writeText(csv);toast("Copié.")}catch(e){o.querySelector("#ct").select();toast("Sélectionné : copiez manuellement.")}};
+ o.querySelector("#dw").onclick=()=>{try{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));a.download="catalogue-loyeke.csv";document.body.appendChild(a);a.click();a.remove();toast("Téléchargement lancé.")}catch(e){toast("Téléchargement impossible : utilisez Copier.")}}}
+function importCSV(){if(!need("catalogue"))return;
+ const o=modal(`<h2>Importer un catalogue</h2><p style="color:var(--mu);font-size:13px">Fichier CSV (Excel : Enregistrer sous → CSV). Colonnes : nom, dci, forme, dosage, prix_achat, prix_vente, devise (USD ou CDF), categorie, seuil, quantite, lot, peremption. « nom » et « prix_vente » sont obligatoires. Un médicament existant (même nom + dosage) est mis à jour.</p><input type="file" id="fi" accept=".csv,.txt,text/csv"><textarea id="ci2" placeholder="…ou collez le CSV ici" style="width:100%;height:110px;font-size:12px"></textarea><div class="acts"><button class="btn o" id="x">Annuler</button><button class="btn" id="go">Importer</button></div>`);
+ const g=x=>o.querySelector(x);g("#x").onclick=()=>o.remove();
+ g("#fi").onchange=e=>{const f=e.target.files[0];if(!f)return;const fr=new FileReader();fr.onload=()=>{let t;try{t=new TextDecoder("utf-8",{fatal:true}).decode(fr.result)}catch(x){t=new TextDecoder("windows-1252").decode(fr.result)}g("#ci2").value=t};fr.readAsArrayBuffer(f)};
+ g("#go").onclick=()=>{const R=parseCSV(g("#ci2").value);if(R.length<2)return toast("Aucune ligne à importer.");
+  const nz=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim().replace(/[^a-z0-9]+/g,"_"),A={nom:"n",nom_commercial:"n",dci:"dci",molecule:"dci",forme:"f",dosage:"dos",prix_achat:"pa",prix_achat_usd:"pa",pa:"pa",prix_vente:"p",prix_vente_usd:"p",pv:"p",prix:"p",devise:"dv",categorie:"cat",seuil:"min",quantite:"q",qte:"q",lot:"lot",peremption:"e",expiration:"e"};
+  const hd=R[0].map(x=>A[nz(x)]);if(!hd.includes("n")||!hd.includes("p"))return toast("Colonnes « nom » et « prix_vente » obligatoires.");
+  let cr=0,up=0,ls=0;const er=[];
+  R.slice(1).forEach((r,i)=>{const v={};hd.forEach((k,j)=>{if(k)v[k]=(r[j]||"").trim()});if(!v.n)return;
+   const num=s=>{const x=parseFloat(String(s).replace(/\s/g,"").replace(",","."));return isNaN(x)?null:x},dv=(v.dv||"USD").toUpperCase(),cc=s=>{const x=num(s);return x==null?null:dv==="CDF"?+(x/S.rate).toFixed(6):x};
+   const pv=cc(v.p);if(pv==null||pv<0){er.push(i+2);return}
+   let m=S.meds.find(x=>x.n.toLowerCase()===v.n.toLowerCase()&&(x.dos||"").toLowerCase()===(v.dos||"").toLowerCase());
+   if(m){m.p=pv;if(v.pa)m.pa=cc(v.pa);if(v.dci)m.dci=v.dci;if(v.f)m.f=v.f;if(v.cat)m.cat=v.cat;if(v.min)m.min=num(v.min)??m.min;m.demo=false;up++}
+   else{m={id:Date.now()+i*2,n:v.n,dci:v.dci||"",f:v.f||"Comprimé",dos:v.dos||"",p:pv,pa:cc(v.pa),cat:v.cat||"",min:num(v.min)??10,demo:false};S.meds.push(m);cr++}
+   const q=num(v.q);let e=v.e;if(e&&/^\d{1,2}[\/.-]\d{1,2}[\/.-]\d{4}$/.test(e)){const[a,b,c]=e.split(/[\/.-]/);e=`${c}-${b.padStart(2,"0")}-${a.padStart(2,"0")}`}
+   if(q>0&&e&&days(e)>=0){S.lots.push({id:Date.now()+i*2+1,m:m.id,no:v.lot||"IMPORT",q,e,c:m.pa||0});ls++;log("Entrée",`${q} u. de ${m.n} — lot ${v.lot||"IMPORT"} (import CSV)`,{m:m.n+" "+m.dos,q,v:q*(m.pa||0)})}});
+  log("Création",`Import CSV : ${cr} créés, ${up} mis à jour, ${ls} lots${er.length?", lignes ignorées : "+er.join(", "):""}`);save();o.remove();render();toast(`Import : ${cr} créés, ${up} mis à jour.`)}}
+function reopen2(day){const c=S.clos[day];if(!can("admin"))return toast("Réouverture réservée à l’administrateur.");
+ form("Rouvrir la journée "+day,[{k:"pw",l:"Votre mot de passe administrateur",t:"password"},{k:"j",l:"Justification (obligatoire)"}],async r=>{if(await hp(r.pw,CU.sa)!==CU.h)return"Mot de passe incorrect.";if(!r.j)return"La justification est obligatoire.";c.reo=true;c.aud.push({t:now(),a:"Réouverture",u:S.user,j:r.j});log("Réouverture",`Journée ${day} rouverte — justification : ${r.j}`)})}
+const isCl=d=>{const c=S.clos[d];return !!(c&&!c.reo)};
+const D=(u,r)=>money(u,"USD")+" · "+money(u,"CDF",r||S.rate);
+function sell(){
+ if(!can("vendre"))return"Permission refusée : vente non autorisée.";if(isCl(td(new Date())))return"Journée clôturée : rouvrez-la (administrateur) pour vendre.";
+ const al=[];let tot=0,pr=0;
+ for(const c of cart){const m=med(c.m);if(!m)return"Médicament introuvable.";
+  if(c.qp>0&&c.q>c.qp)return`Quantité vendue supérieure à la prescrite pour ${m.n}.`;
+  let r=c.q;const a=[];
+  for(const l of fefo(c.m)){if(r<=0)break;const t=Math.min(l.q,r);a.push({l:l.id,no:l.no,e:l.e,q:t,c:l.c});r-=t}
+  if(r>0)return`Stock insuffisant pour ${m.n} (lots valides : ${sellable(c.m)}).`;
+  al.push({m:c.m,n:m.n+" "+m.dos,f:m.f,q:c.q,qp:c.qp||0,p:m.p,demo:!!m.demo,a});tot+=c.q*m.p;pr+=a.reduce((s,x)=>s+x.q*(m.p-x.c),0)}
+ if(!al.length)return"Le panier est vide.";
+ al.forEach(i=>i.a.forEach(x=>{S.lots.find(l=>l.id===x.l).q-=x.q}));
+ S.seq=(S.seq||S.sales.length)+1;
+ const s={id:Date.now(),no:"V-"+String(S.seq).padStart(5,"0"),d:now(),i:al,t:tot,pr,cur:S.cur,rate:S.rate,pat:cartPt.trim(),pay:cartPm,u:S.user,uid:CU?CU.id:0,st:"valide"};
+ S.sales.unshift(s);
+ al.forEach(i=>log("Vente",`${s.no} — ${i.q}× ${i.n} — ${s.pay}${s.pat?" — patient : "+s.pat:""}`,{m:i.n,q:i.q,p:i.p,a:i.q*i.p,v:i.a.reduce((z,x)=>z+x.q*x.c,0)}));
+ cart=[];cartPt="";save();setTimeout(()=>receipt(s),50);return null}
+function calc(day){
+ const s=S.sales.filter(x=>td(x.d)===day),rf=S.sales.filter(x=>x.ca&&td(x.ca)===day),ex=S.exp.filter(x=>td(x.d)===day),lg=S.log.filter(x=>td(x.d)===day);
+ const P=["Espèces","Mobile money","Autre"],z=()=>({"Espèces":0,"Mobile money":0,"Autre":0}),by={},pay=z(),rp=z();let ca=0,pr=0,nq=0,rt=0,rpr=0;
+ s.forEach(x=>{ca+=x.t;pr+=x.pr;pay[x.pay||"Espèces"]+=x.t;x.i.forEach(i=>{by[i.n]=(by[i.n]||0)+i.q;nq+=i.q})});
+ rf.forEach(x=>{rt+=x.t;rpr+=x.pr;rp[x.pay||"Espèces"]+=x.t});
+ const sm=t=>lg.filter(e=>e.t===t),sq=a=>a.reduce((n,e)=>n+(e.q||0),0),sv=a=>a.reduce((n,e)=>n+(e.v||0),0);
+ const en=sm("Entrée"),so=sm("Sortie"),re=sm("Retrait"),et=ex.reduce((a,e)=>a+e.usd,0);
+ return{day,rate:S.rate,nV:s.length,nQ:nq,by,ca,pay,rt,rn:rf.length,et,net:ca-rt,pr:pr-rpr,pn:pr-rpr-et,enc:Object.fromEntries(P.map(k=>[k,pay[k]-rp[k]])),cash:pay["Espèces"]-rp["Espèces"]-et,
+  eq:sq(en),ev:sv(en),sq:sq(so)+nq,sv:sv(so)+s.reduce((a,x)=>a+x.i.reduce((b,i)=>b+i.a.reduce((c,y)=>c+y.q*y.c,0),0),0),rq:sq(re),rv:sv(re),aj:sm("Ajustement").length,
+  low:S.meds.filter(m=>sellable(m.id)<=m.min).map(m=>m.n+" ("+sellable(m.id)+")"),
+  exl:S.lots.filter(l=>l.q>0&&days(l.e)<0).map(l=>(med(l.m)?.n||"?")+" lot "+l.no),soon:S.lots.filter(l=>l.q>0&&days(l.e)>=0&&days(l.e)<=90).map(l=>(med(l.m)?.n||"?")+" lot "+l.no)}}
+function repHTML(R,c){const d=u=>D(u,R.rate),L=(a,b)=>`<div class="row"><div class="t"><span>${a}</span></div><b style="text-align:right">${b}</b></div>`;
+ return `<h3>A. Ventes</h3>`+L("Nombre de ventes",R.nV)+L("Médicaments vendus",R.nQ+" u.")+Object.entries(R.by).map(([k,v])=>L("• "+esc(k),v+" u.")).join("")+L("Chiffre d’affaires",d(R.ca))+Object.entries(R.pay).map(([k,v])=>L("• "+k,d(v))).join("")
+ +`<h3>B. Stock</h3>`+L("Réceptionnés",R.eq+" u. · valeur "+d(R.ev))+L("Sorties (ventes incluses)",R.sq+" u. · coût "+d(R.sv))+L("Retirés (expirés)",R.rq+" u. · "+d(R.rv))+L("Ajustements",R.aj)+L("Rupture / presque",esc(R.low.join(", ")||"Aucun"))+L("Expirés",esc(R.exl.join(", ")||"Aucun"))+L("Proches (90 j)",esc(R.soon.join(", ")||"Aucun"))
+ +`<h3>C. Finances</h3>`+L("Chiffre d’affaires",d(R.ca))+L("Remboursements / annulations ("+R.rn+")",d(R.rt))+L("Recettes nettes",d(R.net))+L("Dépenses",d(R.et))+L("Bénéfice brut estimé",d(R.pr))+L("Bénéfice net (après dépenses)",d(R.pn))+Object.entries(R.enc).map(([k,v])=>L("Encaissé "+k,d(v))).join("")+L("<b>Espèces attendues en caisse</b>",d(R.cash))
+ +(c?L("Espèces comptées",d(c.cnt))+L("Écart",`<span style="color:${Math.abs(c.ec)<1e-4?"var(--g5)":"var(--red)"}">${d(c.ec)}</span>`)+L("Observation",esc(c.obs||"—"))+L("Clôturé le",new Date(c.t).toLocaleString("fr-FR")+" par "+esc(c.u)):"")}
+function rhtml(s){return `<div id="rc" style="max-width:340px;margin:auto;background:#fff;color:#111;padding:14px;border:1px dashed #999;font-size:13px"><div style="text-align:center"><b style="font-size:16px;color:#0B4D2E">${esc(S.ph)}</b><br>Reçu de vente</div><hr>N° : <b>${s.no}</b>${s.st!=="valide"?` — <b>${s.st.toUpperCase()}</b>`:""}<br>${new Date(s.d).toLocaleString("fr-FR")}${s.pat?"<br>Patient : "+esc(s.pat):""}<br>Servi par : ${esc(s.u||"")}<hr>`+s.i.map(i=>`<div style="margin-bottom:6px"><b>${esc(i.n)}</b><br>${i.q} × ${money(i.p,"USD")} / ${money(i.p,"CDF",s.rate)}<br>= <b>${money(i.q*i.p,"USD")} / ${money(i.q*i.p,"CDF",s.rate)}</b></div>`).join("")+`<hr><div style="font-size:15px"><b>TOTAL : ${money(s.t,"USD")}<br>${money(s.t,"CDF",s.rate)}</b></div>Paiement : ${esc(s.pay)}<br>Taux : 1 USD = ${s.rate} FC<hr><div style="text-align:center;font-size:12px">Merci de votre confiance.<br>Conservez ce reçu.${s.i.some(i=>i.demo)?"<br><b>DONNÉES DE DÉMONSTRATION — reçu sans valeur</b>":""}</div></div>`}
+const rtext=s=>`*${S.ph}* — Reçu ${s.no}${s.st!=="valide"?" ("+s.st.toUpperCase()+")":""}\n${new Date(s.d).toLocaleString("fr-FR")}${s.pat?"\nPatient : "+s.pat:""}\n`+s.i.map(i=>`• ${i.n} : ${i.q} × ${money(i.p,"USD")} = ${money(i.q*i.p,"USD")}`).join("\n")+`\n*TOTAL : ${money(s.t,"USD")} / ${money(s.t,"CDF",s.rate)}*\nPaiement : ${s.pay}\nMerci de votre confiance.`;
+function printEl(html){const p=document.createElement("div");p.id="prt";p.innerHTML=html;document.body.appendChild(p);try{window.print()}catch(e){toast("Impression indisponible ici : utilisez Copier ou WhatsApp.")}setTimeout(()=>p.remove(),2000)}
+function receipt(s){if(!s)return;const o=modal(rhtml(s)+`<div class="acts" style="flex-wrap:wrap;justify-content:center;margin-top:12px"><button class="btn" id="r1">Imprimer / PDF</button><button class="btn o" id="r2">Télécharger</button><a class="btn" id="r3" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(rtext(s))}" style="text-decoration:none">WhatsApp</a><button class="btn o" id="r4">Copier</button>${s.st==="valide"?`<button class="btn d" id="r5">Annuler / rembourser</button>`:""}<button class="btn o" id="r6">Fermer</button></div>`);
+ const g=x=>o.querySelector(x);
+ g("#r1").onclick=()=>printEl(rhtml(s));
+ g("#r2").onclick=()=>{try{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["<meta charset=utf-8><title>"+s.no+"</title>"+rhtml(s)],{type:"text/html"}));a.download=s.no+".html";document.body.appendChild(a);a.click();a.remove();toast("Téléchargement lancé.")}catch(e){toast("Téléchargement impossible ici.")}};
+ g("#r4").onclick=async()=>{try{await navigator.clipboard.writeText(rtext(s));toast("Reçu copié.")}catch(e){toast("Copie impossible.")}};
+ if(g("#r5"))g("#r5").onclick=()=>{o.remove();cancelSale(s)};
+ g("#r6").onclick=()=>o.remove()}
+function cancelSale(s){
+ if(!need("annuler"))return;if(s.st!=="valide")return toast("Vente déjà "+s.st+".");
+ if(isCl(td(new Date())))return toast("Journée clôturée : rouvrez-la (administrateur) pour annuler.");
+ form("Annuler / rembourser "+s.no,[{k:"ty",l:"Type",v:"Annulation",o:[["Annulation","Annulation"],["Remboursement","Remboursement"]]},{k:"mo",l:"Motif (obligatoire)"}],r=>{if(!r.mo)return"Le motif est obligatoire.";
+  s.i.forEach(i=>i.a.forEach(x=>{const l=S.lots.find(y=>y.id===x.l);if(l)l.q+=x.q;else S.lots.push({id:Date.now()+Math.random(),m:i.m,no:x.no,q:x.q,e:x.e,c:x.c})}));
+  s.st=r.ty==="Annulation"?"annulée":"remboursée";s.ca=now();s.cm=r.mo;s.cu=S.user;
+  s.i.forEach(i=>log(r.ty,`${s.no} — ${i.q}× ${i.n} remis en stock — motif : ${r.mo}`,{m:i.n,q:i.q,p:i.p,a:i.q*i.p}));toast(r.ty+" enregistrée.")})}
+function adjLot(l){if(!need("stock"))return;const m=med(l.m);form("Corriger le stock",[{k:"nq",l:`Quantité réelle comptée (actuelle : ${l.q})`,t:"number",v:l.q},{k:"mo",l:"Motif (obligatoire)"}],r=>{if(r.nq===""||!(+r.nq>=0))return"Quantité invalide.";if(!r.mo)return"Le motif est obligatoire.";const d=+r.nq-l.q;if(d===0)return"Aucun changement.";const av=l.q;l.q=+r.nq;log("Ajustement",`${m.n} — lot ${l.no} : ${av} → ${l.q} — motif : ${r.mo}`,{m:m.n+" "+m.dos,q:d,v:d*l.c})},`<p style="margin:0 0 10px"><b>${esc(m.n)}</b> — lot ${esc(l.no)}</p>`)}
+function expForm(){if(!need("depenses"))return;if(isCl(td(new Date())))return toast("Journée clôturée.");
+ form("Nouvelle dépense",[{k:"a",l:"Montant",t:"number"},{k:"c",l:"Devise",v:S.cur,o:[["USD","USD ($)"],["CDF","CDF (FC)"]]},{k:"mo",l:"Motif (obligatoire)"}],r=>{if(!(+r.a>0))return"Montant invalide.";if(!r.mo)return"Le motif est obligatoire.";const u=r.c==="CDF"?+r.a/S.rate:+r.a;S.exp.push({id:Date.now(),d:now(),usd:u,mo:r.mo,u:S.user});log("Dépense",`${r.mo} (${r.a} ${r.c})`,{a:u})})}
+function closeDay(day){if(!need("cloture"))return;const R=calc(day);
+ form("Clôturer la journée "+day,[{k:"c",l:"Espèces réellement comptées en caisse",t:"number"},{k:"cu",l:"Devise du comptage",v:S.cur,o:[["USD","USD ($)"],["CDF","CDF (FC)"]]},{k:"o",l:"Observation (facultatif)"}],r=>{
+  if(r.c===""||!(+r.c>=0))return"Saisissez le montant compté (0 si la caisse est vide).";
+  const cnt=r.cu==="CDF"?+r.c/S.rate:+r.c,p=S.clos[day],c={R:calc(day),cnt,obs:r.o,t:now(),u:S.user,reo:false,aud:p?p.aud:[]};c.ec=cnt-c.R.cash;
+  c.aud.push({t:c.t,a:"Clôture",u:S.user,j:`compté ${D(cnt)} · écart ${D(c.ec)}`});S.clos[day]=c;
+  log("Clôture",`Journée ${day} clôturée — attendu ${D(c.R.cash)}, compté ${D(cnt)}, écart ${D(c.ec)}${r.o?" — "+r.o:""}`,{a:cnt})},
+ `<div class="blk" style="background:var(--g1);color:var(--tx)">Espèces attendues : <b>${D(R.cash)}</b><br>Après la clôture : plus de vente ni de dépense sans réouverture par l’administrateur.</div>`)}
+function reopen(day){const c=S.clos[day];if(!S.pin)return toast("Créez d’abord un code PIN (Réglages) : la réouverture est réservée à l’administrateur.");
+ pad("Administrateur","Code PIN pour rouvrir "+day,S.pinLen,async(p,ov)=>{if(await H(p)!==S.pin){ov.querySelector("#ls").textContent="Code incorrect";return}ov.remove();
+  form("Rouvrir la journée "+day,[{k:"j",l:"Justification (obligatoire)"}],r=>{if(!r.j)return"La justification est obligatoire.";c.reo=true;c.aud.push({t:now(),a:"Réouverture",u:S.user,j:r.j});log("Réouverture",`Journée ${day} rouverte — justification : ${r.j}`)})},true)}
+function sell_old(){const al=[];let tot=0,pr=0;
+ for(const c of cart){const m=med(c.m);if(!m)return"Médicament introuvable.";let r=c.q;const a=[];
+  for(const l of fefo(c.m)){if(r<=0)break;const t=Math.min(l.q,r);a.push({l:l.id,no:l.no,e:l.e,q:t,c:l.c});r-=t}
+  if(r>0)return`Stock insuffisant pour ${m.n} (lots valides : ${sellable(c.m)}).`;
+  al.push({m:c.m,n:m.n+" "+m.dos,q:c.q,p:m.p,a});tot+=c.q*m.p;pr+=a.reduce((s,x)=>s+x.q*(m.p-x.c),0)}
+ if(!al.length)return"Le panier est vide.";
+ al.forEach(i=>i.a.forEach(x=>{S.lots.find(l=>l.id===x.l).q-=x.q}));
+ S.sales.unshift({id:Date.now(),d:new Date().toISOString(),i:al,t:tot,pr,cur:S.cur,rate:S.rate});
+ log("Vente",`${al.map(i=>i.q+"× "+i.n).join(", ")} — ${money(tot)}`);cart=[];save();return null}
+const H=async p=>{try{const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode("loyeke:"+p));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}catch(e){let h=5381;for(const c of "loyeke:"+p)h=(h*33^c.charCodeAt(0))>>>0;return"s"+h}};
+function pad(title,sub,len,cb,cancel){const o=document.createElement("div");o.className="lock";let v="";
+ o.innerHTML=`<h2>${title}</h2><p id="ls">${sub}</p><div class="dots">${"<i></i>".repeat(len)}</div><div class="pad">${[1,2,3,4,5,6,7,8,9,"",0,"⌫"].map(k=>k===""?"<span></span>":`<button data-k="${k}">${k}</button>`).join("")}</div><button class="btn o" id="lc" style="margin-top:22px;color:#fff;border-color:#fff;display:none">Annuler</button>`;
+ if(cancel){const c=o.querySelector("#lc");c.style.display="";c.onclick=()=>o.remove()}
+ const upd=()=>o.querySelectorAll(".dots i").forEach((d,i)=>d.classList.toggle("on",i<v.length));
+ o.onclick=async e=>{const b=e.target.closest("[data-k]");if(!b)return;const k=b.dataset.k;if(k==="⌫")v=v.slice(0,-1);else if(v.length<len)v+=k;upd();if(v.length===len){const p=v;v="";await cb(p,o);upd()}};
+ document.body.appendChild(o);return o}
+function pinSetup(){const had=!!S.pin;
+ const o=modal(`<h2>Code PIN</h2><label>Longueur du code</label><select id="pl"><option value="4">4 chiffres</option><option value="6">6 chiffres</option></select><div class="acts"><button class="btn o" id="x">Annuler</button><button class="btn" id="s">Continuer</button></div>`);
+ o.querySelector("#x").onclick=()=>o.remove();
+ o.querySelector("#s").onclick=()=>{const len=+o.querySelector("#pl").value;o.remove();
+  const go=()=>{let first=null;pad("Nouveau code PIN","Saisissez "+len+" chiffres",len,async(p,ov)=>{const s=ov.querySelector("#ls");
+   if(!first){first=p;s.textContent="Confirmez le code";return}
+   if(p!==first){first=null;s.textContent="Les codes diffèrent. Recommencez.";return}
+   S.pin=await H(p);S.pinLen=len;log("Sécurité",had?"Code PIN modifié":"Code PIN créé");save();ov.remove();render();toast("Code PIN enregistré. Retenez-le : il ne peut pas être récupéré.")},true)};
+  if(had)pad("Code actuel","Saisissez votre code actuel",S.pinLen,async(p,ov)=>{if(await H(p)===S.pin){ov.remove();go()}else ov.querySelector("#ls").textContent="Code incorrect"},true);else go()}}
+function pinOff(){pad("Désactiver le PIN","Saisissez votre code actuel",S.pinLen,async(p,ov)=>{if(await H(p)===S.pin){S.pin=null;delete S.pinLen;log("Sécurité","Code PIN désactivé");save();ov.remove();render();toast("Code PIN désactivé.")}else ov.querySelector("#ls").textContent="Code incorrect"},true)}
+function lock(){if(!S.pin||document.querySelector(".lock[data-main]"))return;
+ const o=pad("LoyekeApp_Pharma","Entrez votre code PIN",S.pinLen,async(p,ov)=>{const s=ov.querySelector("#ls");
+  if(Date.now()<until){s.textContent="Trop d’essais. Patientez "+Math.ceil((until-Date.now())/1000)+" s";return}
+  if(await H(p)===S.pin){fails=0;ov.remove()}else{fails++;if(fails>=5){fails=0;until=Date.now()+30000;s.textContent="Trop d’essais. Patientez 30 s"}else s.textContent="Code incorrect ("+(5-fails)+" essais restants)"}});
+ o.dataset.main=1}
+const ic={sell:'<circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h11L21 7H6"/>',home:'<path d="M3 11l9-8 9 8v10H3z"/>',meds:'<rect x="3" y="9" width="18" height="6" rx="3" transform="rotate(-35 12 12)"/>',stock:'<path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/>',exp:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',more:'<circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/>'};
+const names={home:"Accueil",meds:"Médicam.",sell:"Ventes",stock:"Stock",exp:"Péremp.",more:"Réglages"};
+$("#nav").innerHTML=Object.keys(names).map(k=>`<button data-t="${k}"><svg viewBox="0 0 24 24">${ic[k]}</svg>${names[k]}</button>`).join("");
+$("#nav").onclick=e=>{const b=e.target.closest("button");if(b){tab=b.dataset.t;q="";render()}};
+$("#cur").onclick=()=>{S.cur=S.cur==="USD"?"CDF":"USD";save();render()};
+
+function modal(html){const o=document.createElement("div");o.className="ov";o.innerHTML=`<div class="sh">${html}</div>`;o.onclick=e=>{if(e.target===o)o.remove()};document.body.appendChild(o);return o}
+function form(title,fields,ok,extra=""){
+ const o=modal(`<h2>${title}</h2>${extra}`+fields.map(f=>`<label>${f.l}</label>`+(f.o?`<select id="f_${f.k}">${f.o.map(x=>`<option value="${x[0]}" ${x[0]==f.v?"selected":""}>${esc(x[1])}</option>`).join("")}</select>`:`<input id="f_${f.k}" type="${f.t||"text"}" step="any" value="${esc(f.v??"")}" inputmode="${f.t==="number"?"decimal":"text"}">`)).join("")+`<div class="acts"><button class="btn o" id="x">Annuler</button><button class="btn" id="s">Enregistrer</button></div>`);
+ o.querySelector("#x").onclick=()=>o.remove();
+ o.querySelector("#s").onclick=async()=>{const r={};fields.forEach(f=>{r[f.k]=o.querySelector("#f_"+f.k).value.trim()});const err=await ok(r);if(err){toast(err);return}save();o.remove();render()};
+ return o}
+function medForm(m){const n=!m;m=m||{};if(!need("catalogue"))return;setTimeout(()=>{const ov=[...document.querySelectorAll(".ov")].pop(),a=ov&&ov.querySelector(".acts");if(a&&!n&&can("admin")){const b=document.createElement("button");b.className="btn d";b.textContent="Supprimer";b.onclick=()=>{ov.remove();delMed(m)};a.prepend(b)}},0);
+ form(n?"Nouveau médicament":"Modifier le médicament",[{k:"n",l:"Nom commercial",v:m.n},{k:"dci",l:"DCI (molécule)",v:m.dci},{k:"f",l:"Forme",v:m.f||"Comprimé",o:["Comprimé","Gélule","Sirop","Injectable","Pommade","Autre"].map(x=>[x,x])},{k:"dos",l:"Dosage",v:m.dos},{k:"cat",l:"Catégorie thérapeutique",v:m.cat},{k:"pa",l:"Prix d’achat (dans la devise choisie ci-dessous)",t:"number",v:m.pa},{k:"p",l:"Prix de vente",t:"number",v:m.p},{k:"pc",l:"Devise du prix",v:"USD",o:[["USD","USD ($)"],["CDF","CDF (FC)"]]},{k:"min",l:"Seuil d’alerte stock faible",t:"number",v:m.min??10}],r=>{
+ if(!r.n)return"Saisissez le nom du médicament.";if(!(+r.p>=0)||r.p==="")return"Saisissez un prix valide en USD.";
+ const x={n:r.n,dci:r.dci,f:r.f,dos:r.dos,p:cv(r.p,r.pc),pa:r.pa===""?null:cv(r.pa,r.pc),cat:r.cat,min:+r.min||0,demo:false};
+ if(n){S.meds.push({id:Date.now(),...x});log("Création",`Médicament ajouté : ${x.n} ${x.dos} (${money(x.p)})`,{m:x.n+" "+x.dos,p:x.p})}else{const L={n:"nom",dci:"DCI",f:"forme",dos:"dosage",p:"prix vente USD",pa:"prix achat USD",cat:"catégorie",min:"seuil",demo:"démo"};const ch=Object.keys(x).filter(k=>x[k]!==m[k]).map(k=>`${L[k]} : ${m[k]??"—"} → ${x[k]}`);Object.assign(m,x);if(ch.length)log("Modification",`${x.n} — ${ch.join(" ; ")}`,{m:x.n+" "+x.dos})}})}
+function lotForm(mid){if(!need("stock"))return;
+ form("Réception de stock",[{k:"m",l:"Médicament",v:mid,o:S.meds.map(m=>[m.id,m.n+" "+m.dos])},{k:"no",l:"Numéro de lot"},{k:"q",l:"Quantité reçue",t:"number"},{k:"e",l:"Date de péremption",t:"date"},{k:"c",l:"Prix d’achat unitaire (USD)",t:"number"}],r=>{
+ if(!r.no)return"Saisissez le numéro de lot.";if(!(+r.q>0))return"La quantité doit être supérieure à 0.";if(!r.e)return"Saisissez la date de péremption.";
+ if(days(r.e)<0)return"Ce lot est déjà expiré : réception refusée.";
+ S.lots.push({id:Date.now(),m:+r.m,no:r.no,q:+r.q,e:r.e,c:+r.c||0});log("Entrée",`${+r.q} u. de ${med(+r.m).n} — lot ${r.no}, péremption ${fd(r.e)}`,{m:med(+r.m).n+" "+med(+r.m).dos,q:+r.q,p:+r.c||0,a:(+r.q)*(+r.c||0),v:(+r.q)*(+r.c||0)})})}
+function outForm(l){if(!need("stock"))return;const m=med(l.m);
+ if(days(l.e)<0){toast("Lot expiré : sortie bloquée. Retirez-le depuis l’onglet Péremp.");return}
+ form("Sortie de stock",[{k:"q",l:`Quantité (disponible : ${l.q})`,t:"number"},{k:"mo",l:"Motif de la sortie (obligatoire)"}],r=>{if(!(+r.q>0)||+r.q>l.q)return"Quantité invalide : maximum "+l.q+".";if(!r.mo)return"Le motif est obligatoire.";l.q-=+r.q;log("Sortie",`${+r.q} u. de ${m.n} — lot ${l.no} — motif : ${r.mo}`,{m:m.n+" "+m.dos,q:+r.q,p:m.p,v:+r.q*l.c})},`<p style="margin:0 0 10px"><b>${esc(m.n)}</b> — lot ${esc(l.no)}</p>`)}
+
+function render(){
+ document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.t===(["hist","rep","usr"].includes(tab)?"more":tab)));
+ $("#cur").textContent=S.cur==="USD"?"USD $":"CDF FC";$("#who").textContent=CU?CU.n+" · "+ROLES[CU.role]:"";
+ document.querySelectorAll(".fab").forEach(x=>x.remove());
+ const V=$("#v");let h="";
+ const lots=[...S.lots].filter(l=>l.q>0).sort((a,b)=>new Date(a.e)-new Date(b.e));
+ const low=S.meds.filter(m=>sellable(m.id)<=m.min);
+ const exp=lots.filter(l=>days(l.e)<0),soon=lots.filter(l=>{const d=days(l.e);return d>=0&&d<=90});
+ if(tab==="home"){
+  const val=lots.filter(l=>days(l.e)>=0).reduce((a,l)=>a+l.q*(med(l.m)?.p||0),0);
+  const cost=lots.filter(l=>days(l.e)>=0).reduce((a,l)=>a+l.q*l.c,0);
+  const sj=S.sales.filter(s=>td(s.d)===td(new Date())),vv=sj.filter(s=>s.st==="valide"),tj=vv.reduce((a,s)=>a+s.t,0),bj=vv.reduce((a,s)=>a+s.pr,0);
+  h=`${S.meds.some(m=>m.demo)?`<div class="blk" style="background:var(--ambbg);color:var(--amb)">DONNÉES DE DÉMONSTRATION présentes (${S.meds.filter(m=>m.demo).length} médicaments). Prix et stocks fictifs, jamais officiels. Remplacez-les par vos vraies données ou réinitialisez-les dans Réglages.</div>`:""}<div class="hero"><small>Valeur du stock vendable</small><div class="big">${money(val)}</div><small>Marge potentielle : ${money(val-cost)}</small></div>
+  <div class="grid"><div class="k"><b>${S.meds.length}</b><span>Médicaments</span></div><div class="k w"><b>${low.length}</b><span>Stock faible</span></div><div class="k w"><b>${soon.length}</b><span>Lots à moins de 90 jours</span></div><div class="k r"><b>${exp.length}</b><span>Lots expirés (bloqués)</span></div><div class="k"><b>${money(tj)}</b><span>Ventes aujourd’hui (${sj.length})</span></div><div class="k"><b>${money(bj)}</b><span>Bénéfice aujourd’hui</span></div></div><button class="btn" id="gr" style="width:100%;margin-top:12px">Rapport journalier</button>
+  <h3>À traiter en priorité</h3>`;
+  const al=[...exp.map(l=>({t:med(l.m).n+" — lot "+l.no,s:"Expiré le "+fd(l.e),c:"r",g:"Expiré"})),...low.map(m=>({t:m.n+" "+m.dos,s:"Disponible : "+sellable(m.id)+" (seuil "+m.min+")",c:"w",g:"Stock faible"})),...soon.map(l=>({t:med(l.m).n+" — lot "+l.no,s:"Expire le "+fd(l.e),c:"w",g:days(l.e)+" j"}))];
+  h+=al.length?al.slice(0,8).map(a=>`<div class="row"><div class="t"><b>${esc(a.t)}</b><span>${a.s}</span></div><span class="tag ${a.c}">${a.g}</span></div>`).join(""):`<div class="empty">Aucune alerte. Votre stock est en ordre.</div>`;
+ }
+ if(tab==="meds"){
+  h=`<h2>Médicaments</h2><input id="q" placeholder="Rechercher un médicament" value="${esc(q)}">`;
+  const L=S.meds.filter(m=>(m.n+m.dci).toLowerCase().includes(q.toLowerCase()));
+  h+=L.length?L.map(m=>{const s=sellable(m.id),lw=s<=m.min;return`<div class="row" data-m="${m.id}"><div class="t"><b>${esc(m.n)} ${esc(m.dos)}</b><span>${esc(m.f)} · ${esc(m.dci)}${m.cat?" · "+esc(m.cat):""} · vente ${money(m.p)}${m.pa!=null?" · achat "+money(m.pa):""}</span>${m.demo?`<br><span class="tag w">DÉMO · prix fictif</span>`:""}</div><span class="tag ${s===0?"r":lw?"w":""}">${s===0?"Rupture":s}</span></div>`}).join(""):`<div class="empty">Aucun médicament. Appuyez sur + pour en ajouter.</div>`;
+ }
+ if(tab==="stock"){
+  h=`<h2>Stock par lot</h2><p style="color:var(--mu);margin:0 0 10px;font-size:13px">Triés par péremption : vendez d’abord les lots qui expirent en premier.</p>`;
+  h+=lots.length?lots.map(l=>{const [t,c]=st(l);return`<div class="row"><div class="t"><b>${esc(med(l.m).n)} — ${l.q} u.</b><span>Lot ${esc(l.no)} · ${fd(l.e)}</span><br><span class="tag ${c}">${t}</span></div>${c==="r"?`<span class="tag r">Bloqué</span>`:`<button class="btn o" data-o="${l.id}">Sortie</button>`}<button class="btn o" data-j="${l.id}">Corriger</button></div>`}).join(""):`<div class="empty">Aucun lot en stock. Appuyez sur + pour enregistrer une réception.</div>`;
+ }
+ if(tab==="sell"){
+  const cs=cart.reduce((a,c)=>a+c.q*(med(c.m)?.p||0),0),sj=S.sales.filter(s=>td(s.d)===td(new Date()));
+  h=`<h2>Nouvelle vente</h2><p style="color:var(--mu);margin:0 0 10px;font-size:13px">Aujourd’hui : ${sj.length} vente(s) · ${money(sj.reduce((a,s)=>a+s.t,0))}. Les lots expirés sont exclus ; le lot qui expire en premier est vendu en premier.</p>`;
+  if(cart.length)h+=cart.map(c=>{const m=med(c.m);return`<div class="row"><div class="t"><b>${esc(m.n)} ${esc(m.dos)}</b><span>${esc(m.f)} · PU ${money(m.p)} · stock ${sellable(m.id)}</span><br><span>Sous-total : <b>${money(m.p*c.q)}</b></span><br><span>Prescrit : <input type="number" inputmode="numeric" min="0" value="${c.qp||""}" data-cx="${c.m}" style="width:70px;padding:4px;margin:4px 0 0"></span></div><div class="q"><button data-cm="${c.m}" aria-label="Moins">−</button><input type="number" inputmode="numeric" min="1" value="${c.q}" data-ci="${c.m}"><button data-cp="${c.m}" aria-label="Plus">+</button></div></div>`}).join("")+`<div class="tot"><span>Total à payer</span><span style="text-align:right">${money(cs,"USD")}<br>${money(cs,"CDF")}</span></div><label>Nom du patient (facultatif)</label><input id="pt" value="${esc(cartPt)}"><label>Mode de paiement</label><select id="pm">${["Espèces","Mobile money","Autre"].map(x=>`<option ${x===cartPm?"selected":""}>${x}</option>`).join("")}</select><div class="acts"><button class="btn o" id="cc">Vider</button><button class="btn" id="cv" style="flex:1">VALIDER LA VENTE</button></div>`;
+  h+=`<h3>Ajouter un médicament</h3><input id="q" placeholder="Rechercher un médicament" value="${esc(q)}">`;
+  const L=S.meds.filter(m=>(m.n+m.dci).toLowerCase().includes(q.toLowerCase()));
+  h+=L.length?L.map(m=>{const f=fefo(m.id),s=sellable(m.id),ex=S.lots.some(l=>l.m===m.id&&l.q>0&&days(l.e)<0);return`<div class="row" ${s>0?`data-a="${m.id}"`:'style="opacity:.6"'}><div class="t"><b>${esc(m.n)} ${esc(m.dos)}</b><span>${esc(m.f)} · ${money(m.p)}${f[0]?" · lot "+esc(f[0].no)+" (exp. "+fd(f[0].e)+")":""}</span>${ex?`<br><span class="tag r">Lot expiré exclu</span>`:""}</div><span class="tag ${s===0?"r":""}">${s===0?"Indisponible":s+" en stock"}</span></div>`}).join(""):`<div class="empty">Aucun médicament trouvé.</div>`;
+  h+=`<h3>Dernières ventes</h3>`+(S.sales.length?S.sales.slice(0,15).map(s=>`<div class="row" data-s="${s.id}"><div class="t"><b>${s.no} · ${money(s.t,s.cur,s.rate)}${s.st!=="valide"?" ("+s.st+")":""}</b><span>${new Date(s.d).toLocaleString("fr-FR",{dateStyle:"short",timeStyle:"short"})} · ${esc(s.i.map(i=>i.q+"× "+i.n).join(", "))}</span></div></div>`).join(""):`<div class="empty">Aucune vente enregistrée.</div>`);
+ }
+ if(tab==="rep"&&!can("rapports")){tab="home";toast("Accès refusé : rapports.");return render()}
+ if(tab==="usr"&&!can("admin")){tab="home";return render()}
+ if(tab==="usr"){h=`<h2>Utilisateurs et permissions</h2><div class="acts" style="justify-content:flex-start;margin-bottom:10px"><button class="btn o" id="ub">← Réglages</button><button class="btn" id="un">+ Nouvel utilisateur</button></div>`+S.users.map(u=>{const lg=S.log.filter(e=>e.uid===u.id),vs=S.sales.filter(s=>s.uid===u.id&&s.st==="valide");return`<div class="row"><div class="t"><b>${esc(u.n)} · ${esc(u.u)}</b><span>${ROLES[u.role]} · ${u.on?"Actif":"Désactivé"} · ${lg.length} opérations · ${vs.length} ventes (${money(vs.reduce((a,s)=>a+s.t,0))}) · dernière activité : ${lg[0]?new Date(lg[0].d).toLocaleString("fr-FR",{dateStyle:"short",timeStyle:"short"}):"—"}</span></div><div style="display:flex;flex-direction:column;gap:6px"><button class="btn o" data-ue="${u.id}">Modifier</button><button class="btn o" data-ua="${u.id}">Activité</button></div></div>`}).join("")}
+ if(tab==="rep"){if(!repDay)repDay=td(new Date());
+  const day=repDay,c=S.clos[day],cl=c&&!c.reo,R=cl?c.R:calc(day);
+  h=`<h2>Rapport journalier</h2><button class="btn o" id="hb2" style="margin-bottom:10px">← Réglages</button><label>Date</label><input type="date" id="rd" value="${day}" max="${td(new Date())}"><span class="tag ${cl?"":"w"}">${cl?"Journée clôturée":c?"Rouverte par l’administrateur":"Journée non clôturée"}</span><div id="rb">`+repHTML(R,cl?c:null)+`</div><div class="acts" style="flex-wrap:wrap;justify-content:flex-start;margin-top:12px">`+(cl?`<button class="btn d" id="ro">Rouvrir (admin)</button>`:`<button class="btn o" id="ae">+ Dépense</button><button class="btn" id="cj">CLÔTURER LA JOURNÉE</button>`)+`<button class="btn o" id="rp">PDF / Imprimer</button><a class="btn o" id="rw" target="_blank" rel="noopener" style="text-decoration:none">WhatsApp</a></div>`
+  +(c&&c.aud.length?`<h3>Traçabilité</h3>`+c.aud.map(a=>`<div class="row"><div class="t"><b>${a.a} · ${esc(a.u)}</b><span>${new Date(a.t).toLocaleString("fr-FR")}${a.j?" · "+esc(a.j):""}</span></div></div>`).join(""):"")
+  +`<h3>Rapports clôturés</h3>`+(Object.keys(S.clos).length?Object.keys(S.clos).sort().reverse().map(d=>`<div class="row" data-d="${d}"><div class="t"><b>${d}</b><span>CA ${money(S.clos[d].R.ca,"USD")} · écart ${money(S.clos[d].ec,"USD")}</span></div><span class="tag ${S.clos[d].reo?"w":""}">${S.clos[d].reo?"Rouverte":"Clôturée"}</span></div>`).join(""):`<div class="empty">Aucun rapport clôturé.</div>`);
+ }
+ if(tab==="hist"){
+  const T=["Vente","Entrée","Sortie","Ajustement","Retrait","Création","Modification","Annulation","Remboursement","Dépense","Clôture","Réouverture","Sécurité","Sauvegarde","Utilisateur","Connexion","Suppression"],ms=[...new Set(S.log.map(e=>e.m).filter(Boolean))].sort();
+  h=`<h2>Historique des opérations</h2><button class="btn o" id="hb" style="margin-bottom:10px">← Réglages</button><div class="grid"><div><label>Du</label><input type="date" id="h1" value="${hd1}"></div><div><label>Au</label><input type="date" id="h2" value="${hd2}"></div></div><select id="hf"><option value="">Tous les types</option>${T.map(t=>`<option ${hf===t?"selected":""}>${t}</option>`).join("")}</select>${can("admin")?`<select id="hu"><option value="">Tous les utilisateurs</option>${S.users.map(u=>`<option ${hu===u.n?"selected":""}>${esc(u.n)}</option>`).join("")}</select>`:""}<select id="hm"><option value="">Tous les médicaments</option>${ms.map(t=>`<option ${hm===t?"selected":""}>${esc(t)}</option>`).join("")}</select><p style="color:var(--mu);font-size:12px;margin:0 0 8px">Les opérations sont conservées définitivement : aucune ne peut être supprimée.</p>`;
+  const L=S.log.filter(e=>(!hf||e.t===hf)&&(!hm||e.m===hm)&&(!hu||e.u===hu)&&(can("admin")||(CU&&e.uid===CU.id))&&(!hd1||td(e.d)>=hd1)&&(!hd2||td(e.d)<=hd2));
+  h+=`<p style="margin:0 0 8px;color:var(--mu);font-size:13px">${L.length} opération(s)</p>`+(L.length?L.slice(0,300).map(e=>`<div class="row"><div class="t"><b>${esc(e.x)}</b><span>${new Date(e.d).toLocaleString("fr-FR",{dateStyle:"short",timeStyle:"short"})} · ${esc(e.u||"—")}${e.m?" · "+esc(e.m):""}${e.q!=null?" · qté "+e.q:""}${e.p!=null?" · PU "+money(e.p):""}${e.a!=null?" · "+money(e.a):""}</span></div><span class="tag ${["Annulation","Remboursement","Retrait","Réouverture"].includes(e.t)?"r":["Ajustement","Modification","Sortie","Dépense"].includes(e.t)?"w":""}">${e.t}</span></div>`).join(""):`<div class="empty">Aucune opération pour ces filtres.</div>`);
+ }
+ if(tab==="hist_old"){
+  h=`<h2>Historique</h2><button class="btn o" id="hb" style="margin-bottom:10px">← Réglages</button><select id="hf"><option value="">Toutes les opérations</option>${["Vente","Entrée","Sortie","Retrait","Création","Modification","Sécurité","Sauvegarde"].map(t=>`<option ${hf===t?"selected":""}>${t}</option>`).join("")}</select>`;
+  const L=S.log.filter(e=>!hf||e.t===hf).slice(0,100);
+  h+=L.length?L.map(e=>`<div class="row"><div class="t"><b>${esc(e.x)}</b><span>${new Date(e.d).toLocaleString("fr-FR",{dateStyle:"short",timeStyle:"short"})}</span></div><span class="tag ${e.t==="Vente"||e.t==="Entrée"?"":e.t==="Retrait"?"r":"w"}">${e.t}</span></div>`).join(""):`<div class="empty">Aucune opération enregistrée.</div>`;
+ }
+ if(tab==="exp"){
+  h=`<h2>Péremptions</h2><h3>Expirés (vente bloquée)</h3>`+(exp.length?exp.map(l=>`<div class="row"><div class="t"><b>${esc(med(l.m).n)} — ${l.q} u.</b><span>Lot ${esc(l.no)} · expiré le ${fd(l.e)}</span></div><button class="btn d" data-r="${l.id}">Retirer</button></div>`).join(""):`<div class="empty">Aucun lot expiré.</div>`);
+  h+=`<h3>Expirent sous 90 jours</h3>`+(soon.length?soon.map(l=>`<div class="row"><div class="t"><b>${esc(med(l.m).n)} — ${l.q} u.</b><span>Lot ${esc(l.no)} · ${fd(l.e)}</span></div><span class="tag w">${days(l.e)} j</span></div>`).join(""):`<div class="empty">Aucun lot proche de la péremption.</div>`);
+ }
+ if(tab==="more"){
+  h=`<h2>Réglages</h2><label>Taux de change (1 USD = ? CDF)</label><input id="rate" type="number" value="${S.rate}" inputmode="numeric">
+  <button class="btn" id="sr">Enregistrer le taux</button>
+  <h3>Mon compte</h3><p style="color:var(--mu);font-size:13px;margin:0 0 8px">${CU?esc(CU.n)+" — "+ROLES[CU.role]:""}</p><div class="acts" style="justify-content:flex-start"><button class="btn o" id="mp">Changer mon mot de passe</button><button class="btn d" id="lo">Se déconnecter</button></div>${can("admin")?`<h3>Administration</h3><button class="btn" id="ug">Utilisateurs et permissions</button>`:""}<h3>Catalogue</h3><p style="color:var(--mu);font-size:12px;margin:0 0 8px">Les prix de démonstration sont fictifs et indicatifs, jamais officiels : tous sont modifiables.</p><div class="acts" style="justify-content:flex-start;flex-wrap:wrap"><button class="btn o" id="cx">Exporter CSV</button><button class="btn o" id="ci">Importer CSV</button><button class="btn o" id="cd">Charger le catalogue de démonstration</button></div><h3>Pharmacie</h3><label>Nom de la pharmacie (sur les reçus)</label><input id="ph" value="${esc(S.ph)}"><label>Nom de l’utilisateur</label><input id="us" value="${esc(S.user)}" readonly><button class="btn" id="sv">Enregistrer</button><h3>Sécurité</h3><p style="color:var(--mu);font-size:13px;margin:0 0 10px">${S.pin?"Code PIN actif ("+S.pinLen+" chiffres).":"Aucun code PIN : l’application s’ouvre sans protection."}</p><div class="acts" style="justify-content:flex-start"><button class="btn" id="pn">${S.pin?"Changer le code PIN":"Créer un code PIN"}</button>${S.pin?`<button class="btn d" id="pd">Désactiver</button>`:""}</div>
+  <h3>Historique et rapports</h3><div class="acts" style="justify-content:flex-start"><button class="btn o" id="hh">Historique des opérations</button><button class="btn" id="hr">Rapport journalier</button></div>
+  <h3>Sauvegarde des données</h3><p style="color:var(--mu);font-size:13px;margin:0 0 10px">Vos données restent sur cet appareil et fonctionnent sans Internet. Copiez une sauvegarde régulièrement.</p>
+  <div class="acts" style="justify-content:flex-start"><button class="btn" id="bk">Copier la sauvegarde</button><button class="btn o" id="rs">Restaurer</button></div>
+  <h3>Données de démonstration</h3><p style="color:var(--mu);font-size:12px;margin:0 0 8px">Supprime les médicaments et stocks fictifs pour démarrer avec vos vraies données.</p><button class="btn d" id="rn">Réinitialiser les données de démonstration</button><button id="rz" style="display:none"></button>
+  <p style="color:var(--mu);font-size:12px;margin-top:24px">LoyekeApp_Pharma v1 — gestion de stock. Aucune fonction de diagnostic ni de prescription.</p>`;
+ }
+ V.innerHTML=h;
+ if(tab==="meds"||tab==="stock"){const f=document.createElement("button");f.className="fab";f.textContent="+";f.setAttribute("aria-label","Ajouter");f.onclick=()=>tab==="meds"?medForm():S.meds.length?lotForm():alert("Ajoutez d’abord un médicament.");document.body.appendChild(f)}
+ const qi=$("#q");if(qi){qi.oninput=e=>{q=e.target.value;const p=e.target.selectionStart;render();const n=$("#q");n.focus();n.setSelectionRange(p,p)}}
+ V.querySelectorAll("[data-m]").forEach(r=>r.onclick=()=>medForm(med(+r.dataset.m)));
+ V.querySelectorAll("[data-a]").forEach(r=>r.onclick=()=>{const id=+r.dataset.a,c=cart.find(x=>x.m===id),mx=sellable(id);if(c){if(c.q<mx)c.q++;else toast("Stock maximum atteint : "+mx)}else cart.push({m:id,q:1});render()});
+ V.querySelectorAll("[data-cm]").forEach(b=>b.onclick=()=>{const c=cart.find(x=>x.m===+b.dataset.cm);c.q--;if(c.q<1)cart=cart.filter(x=>x!==c);render()});
+ V.querySelectorAll("[data-cp]").forEach(b=>b.onclick=()=>{const id=+b.dataset.cp,c=cart.find(x=>x.m===id),mx=sellable(id);if(c.q<mx)c.q++;else toast("Stock maximum atteint : "+mx);render()});
+ V.querySelectorAll("[data-ci]").forEach(i=>i.onchange=()=>{const id=+i.dataset.ci,c=cart.find(x=>x.m===id),mx=sellable(id);let v=Math.floor(+i.value);if(!(v>=1))v=1;if(v>mx){v=mx;toast("Stock maximum : "+mx)}c.q=v;render()});
+ if($("#cc"))$("#cc").onclick=()=>{cart=[];render()};
+ V.querySelectorAll("[data-cx]").forEach(i=>i.onchange=()=>{const c=cart.find(x=>x.m===+i.dataset.cx);c.qp=Math.max(0,Math.floor(+i.value)||0);if(c.qp&&c.q>c.qp)toast("Quantité vendue supérieure à la prescrite.")});
+ if($("#pt")){$("#pt").oninput=e=>{cartPt=e.target.value};$("#pm").onchange=e=>{cartPm=e.target.value}}
+ V.querySelectorAll("[data-s]").forEach(r=>r.onclick=()=>receipt(S.sales.find(s=>s.id===+r.dataset.s)));
+ V.querySelectorAll("[data-j]").forEach(b=>b.onclick=()=>adjLot(S.lots.find(l=>l.id===+b.dataset.j)));
+ if($("#gr"))$("#gr").onclick=()=>{tab="rep";repDay=td(new Date());render()};
+ if($("#un")){$("#un").onclick=()=>userForm();$("#ub").onclick=()=>{tab="more";render()};V.querySelectorAll("[data-ue]").forEach(b=>b.onclick=()=>userForm(S.users.find(u=>u.id===+b.dataset.ue)));V.querySelectorAll("[data-ua]").forEach(b=>b.onclick=()=>{hu=S.users.find(u=>u.id===+b.dataset.ua).n;hd1=hd2=hf=hm="";tab="hist";render()})}
+ if($("#h1")){$("#h1").onchange=e=>{hd1=e.target.value;render()};$("#h2").onchange=e=>{hd2=e.target.value;render()};$("#hm").onchange=e=>{hm=e.target.value;render()};if($("#hu"))$("#hu").onchange=e=>{hu=e.target.value;render()}}
+ if($("#rd")){$("#rd").onchange=e=>{repDay=e.target.value||td(new Date());render()};$("#hb2").onclick=()=>{tab="more";render()};
+  if($("#ae"))$("#ae").onclick=expForm;if($("#cj"))$("#cj").onclick=()=>closeDay(repDay);if($("#ro"))$("#ro").onclick=()=>reopen2(repDay);
+  $("#rp").onclick=()=>printEl(`<h2>${esc(S.ph)} — Rapport du ${repDay}</h2>`+$("#rb").innerHTML);
+  $("#rw").href="https://wa.me/?text="+encodeURIComponent(S.ph+" — Rapport du "+repDay+"\n"+$("#rb").innerText);
+  V.querySelectorAll("[data-d]").forEach(r=>r.onclick=()=>{repDay=r.dataset.d;render();scrollTo(0,0)})}
+ if($("#cv"))$("#cv").onclick=()=>{const e=sell();if(e)toast(e);else toast("Vente enregistrée.");render()};
+ if($("#hf")){$("#hf").onchange=e=>{hf=e.target.value;render()};$("#hb").onclick=()=>{tab="more";render()}}
+ V.querySelectorAll("[data-o]").forEach(b=>b.onclick=()=>outForm(S.lots.find(l=>l.id===+b.dataset.o)));
+ V.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{if(!need("stock"))return;if(confirm("Retirer ce lot expiré du stock ?")){const l=S.lots.find(x=>x.id===+b.dataset.r);S.lots=S.lots.filter(x=>x.id!==+b.dataset.r);if(l)log("Retrait",`Lot expiré retiré : ${med(l.m)?.n} — lot ${l.no}, ${l.q} u.`,{m:(med(l.m)?.n||"")+" "+(med(l.m)?.dos||""),q:l.q,v:l.q*l.c});save();render()}});
+ if(tab==="more"){
+  $("#hh").onclick=()=>{tab="hist";render()};$("#hr").onclick=()=>{tab="rep";repDay=td(new Date());render()};
+  $("#mp").onclick=pwForm;$("#lo").onclick=logout;if($("#ug"))$("#ug").onclick=()=>{tab="usr";render()};$("#cx").onclick=exportCSV;$("#ci").onclick=importCSV;$("#cd").onclick=loadDemo;$("#rn").onclick=purgeDemo;
+  $("#sv").onclick=()=>{if(!need("admin"))return;const a=$("#ph").value.trim(),b=$("#us").value.trim();if(!a||!b)return toast("Renseignez les deux noms.");if(a!==S.ph||b!==S.user)log("Modification",`Paramètres : pharmacie « ${a} », utilisateur « ${b} »`);S.ph=a;S.user=b;save();toast("Enregistré.")};$("#pn").onclick=()=>need("admin")&&pinSetup();if($("#pd"))$("#pd").onclick=()=>need("admin")&&pinOff();
+  $("#sr").onclick=()=>{if(!need("admin"))return;const r=+$("#rate").value;if(r>0){log("Modification",`Taux de change : ${S.rate} → ${r} FC pour 1 USD`);S.rate=r;save();alert("Taux enregistré.")}else alert("Taux invalide.")};
+  $("#bk").onclick=async()=>{if(!need("admin"))return;try{await navigator.clipboard.writeText(JSON.stringify(S));alert("Sauvegarde copiée. Collez-la dans une note ou un message à vous-même.")}catch(e){prompt("Copiez cette sauvegarde :",JSON.stringify(S))}};
+  $("#rs").onclick=()=>{if(!need("admin"))return;const t=prompt("Collez votre sauvegarde :");if(!t)return;try{const o=JSON.parse(t);if(!o.meds||!o.lots)throw 0;o.sales=o.sales||[];o.log=o.log||[];o.exp=o.exp||[];o.clos=o.clos||{};o.user=o.user||S.user;o.ph=o.ph||S.ph;o.users=S.users;o.pin=S.pin;o.pinLen=S.pinLen;S=o;log("Sauvegarde","Données restaurées depuis une sauvegarde");save();render()}catch(e){alert("Sauvegarde invalide.")}};
+  $("#rz").onclick=()=>{if(confirm("Remplacer toutes les données (stock et ventes) par la démonstration ? Action irréversible.")){const p=S.pin,pl=S.pinLen,lg=S.log,cl=S.clos,us=S.user,ph=S.ph,sq=S.seq;S=demo();S.sales=[];S.exp=[];S.clos=cl||{};S.user=us;S.ph=ph;S.seq=sq;S.log=lg;S.pin=p;S.pinLen=pl;log("Sauvegarde","Données de démonstration rechargées");save();render()}};
+ }
+}
+lock();render();boot();
+document.addEventListener("visibilitychange",()=>{if(document.hidden)hiddenAt=Date.now();else if(hiddenAt&&Date.now()-hiddenAt>30000)lock()});
+</script>
+<script>if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));</script>
+</body>
+</html>
